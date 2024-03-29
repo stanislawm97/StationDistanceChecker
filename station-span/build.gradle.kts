@@ -1,41 +1,18 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "org.mothdigital.stationdistancechecker"
+    namespace = "org.mothdigital.stationdistancechecker.station_span"
     compileSdk = 34
 
-    buildFeatures.buildConfig = true
-
     defaultConfig {
-        applicationId = "org.mothdigital.stationdistancechecker"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
-        }
-
-        buildConfigField("String", "BASE_URL", "\"https://koleo.pl/api/v2/main/\"")
-        buildConfigField("String", "X_KOLEO_VERSION", "\"1\"")
-        buildConfigField("String", "DATABASE_NAME", "\"station_distance_checker_database\"")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
@@ -51,22 +28,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":station-span"))
     implementation(project(":station-span:domain"))
-    implementation(project(":station-span:data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -79,15 +44,6 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-
-    // Room
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
-    testImplementation(libs.room.testing)
 
     testImplementation(libs.junit)
     testImplementation(libs.koin.test.junit4)

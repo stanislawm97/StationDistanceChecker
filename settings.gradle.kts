@@ -1,5 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":station-span")
+include(":station-span:domain")
+include(":station-span:data")
+
 pluginManagement {
     repositories {
         google {

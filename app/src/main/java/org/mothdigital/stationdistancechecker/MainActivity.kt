@@ -32,6 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import org.mothdigital.station_span.StationSpanRoute
+import org.mothdigital.station_span.StationSpanScreen
 import org.mothdigital.stationdistancechecker.ui.theme.StationDistanceCheckerTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,69 +42,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             StationDistanceCheckerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                Content()
             }
         }
     }
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(false) }
-
-    Box(Modifier.fillMaxSize()) {
-        Box(
-            Modifier
-                .zIndex(1f)
-                .fillMaxWidth()
-        ) {
-            DockedSearchBar(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 8.dp),
-                query = text,
-                onQueryChange = { text = it },
-                onSearch = { active = false },
-                active = active,
-                onActiveChange = { active = it },
-                placeholder = { Text("Hited search text") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(0.dp),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    items(4) { idx ->
-                        val resultText = "Suggestion $idx"
-
-                        ListItem(
-                            headlineContent = { Text(resultText) },
-                            supportingContent = { Text("Additional info") },
-                            leadingContent = {
-                                Icon(
-                                    Icons.Filled.Star,
-                                    contentDescription = null
-                                )
-                            },
-                            modifier = Modifier.clickable {
-                                text = resultText
-                                active = false
-                            }
-                        )
-                    }
-                }
-            }
-        }
+fun Content() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        StationSpanRoute()
     }
 }
 
@@ -110,6 +62,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     StationDistanceCheckerTheme {
-        Greeting("Android")
+        Content()
     }
 }

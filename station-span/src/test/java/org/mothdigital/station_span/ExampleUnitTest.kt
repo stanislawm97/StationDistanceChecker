@@ -1,4 +1,4 @@
-package org.mothdigital.stationdistancechecker
+package org.mothdigital.station_span
 
 import org.junit.Test
 
