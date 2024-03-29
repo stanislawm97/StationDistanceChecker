@@ -23,7 +23,8 @@ class StationSpanViewModel(
             val stations = runCatching {
                 stationSpanRepository.getStations(intArrayOf(0, 1))
             }.onFailure {
-                if(it is CancellationException) {
+
+            if(it is CancellationException) {
                     throw it
                 } else {
                     it.printStackTrace()
