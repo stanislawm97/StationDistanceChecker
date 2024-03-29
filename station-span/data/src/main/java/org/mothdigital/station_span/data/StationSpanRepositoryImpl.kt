@@ -10,6 +10,7 @@ import org.mothdigital.station_span.data.mapper.toFetchTimeEntity
 import org.mothdigital.station_span.domain.StationSpanRepository
 import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
+import java.util.concurrent.CancellationException
 import kotlin.time.Duration.Companion.hours
 
 class StationSpanRepositoryImpl(
@@ -20,7 +21,13 @@ class StationSpanRepositoryImpl(
 ) : StationSpanRepository {
 
     override suspend fun getStations(ids: IntArray): List<Station> {
-        updateIfNeeded()
+        runCatching {
+            updateIfNeeded()
+        }.onFailure {
+            if (it is CancellationException) {
+                throw it
+            }
+        }
 
         return stationDao.loadAllByIds(ids).map {
             it.toDomain()
@@ -28,9 +35,15 @@ class StationSpanRepositoryImpl(
     }
 
     override suspend fun getStationKeyword(query: String): List<StationKeyword> {
-        updateIfNeeded()
+        runCatching {
+            updateIfNeeded()
+        }.onFailure {
+            if (it is CancellationException) {
+                throw it
+            }
+        }
 
-        return stationKeywordDao.findStationsByKeyword(query).map {
+        return stationKeywordDao.findStationsByKeyword("%$query%").map {
             it.toDomain()
         }
     }

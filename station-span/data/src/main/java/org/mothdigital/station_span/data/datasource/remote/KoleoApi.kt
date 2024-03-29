@@ -1,7 +1,5 @@
 package org.mothdigital.station_span.data.datasource.remote
 
-import org.mothdigital.station_span.data.datasource.remote.model.StationDto
-import org.mothdigital.station_span.data.datasource.remote.model.StationKeywordDto
 import retrofit2.http.GET
 
 interface KoleoApi {

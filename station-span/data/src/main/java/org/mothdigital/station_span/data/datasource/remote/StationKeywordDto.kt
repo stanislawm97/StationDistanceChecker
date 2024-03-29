@@ -1,4 +1,4 @@
-package org.mothdigital.station_span.data.datasource.remote.model
+package org.mothdigital.station_span.data.datasource.remote
 
 import com.google.gson.annotations.SerializedName
 

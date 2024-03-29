@@ -10,7 +10,16 @@ interface StationKeywordDao {
     @Insert
     fun insertAll(vararg stations: StationKeywordEntity)
 
-    @Query("SELECT * FROM station_keyword WHERE keyword LIKE :searchQuery")
+    @Query(
+        """
+        SELECT sk.* 
+        FROM station_keyword sk
+        JOIN station s ON sk.station_id = s.id
+        WHERE sk.keyword LIKE :searchQuery
+        ORDER BY s.hits DESC
+        LIMIT 10
+        """
+    )
     fun findStationsByKeyword(searchQuery: String): List<StationKeywordEntity>
 
     @Query("DELETE FROM station_keyword")

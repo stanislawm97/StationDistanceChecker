@@ -50,12 +50,13 @@ fun StationSpanScreen(
                     .padding(top = 8.dp),
                 query = text,
                 onQueryChange = {
+                    active = it.isNotEmpty()
                     actions.onQueryChange(it)
                     text = it
                 },
                 onSearch = { active = false },
                 active = active,
-                onActiveChange = { active = it },
+                onActiveChange = { },
                 placeholder = { Text("Hited search text") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },

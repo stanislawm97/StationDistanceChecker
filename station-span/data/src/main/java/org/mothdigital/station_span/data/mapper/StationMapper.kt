@@ -1,7 +1,7 @@
 package org.mothdigital.station_span.data.mapper
 
 import org.mothdigital.station_span.data.datasource.local.station.StationEntity
-import org.mothdigital.station_span.data.datasource.remote.model.StationDto
+import org.mothdigital.station_span.data.datasource.remote.StationDto
 import org.mothdigital.station_span.domain.model.Station
 
 fun StationDto.toEntity() = StationEntity(
