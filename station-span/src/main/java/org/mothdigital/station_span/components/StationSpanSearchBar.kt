@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -40,12 +41,17 @@ import org.mothdigital.stationdistancechecker.design.theme.StationDistanceChecke
 @OptIn(ExperimentalMaterial3Api::class)
 fun StationSpanSearchBar(
     modifier: Modifier = Modifier,
+    hint: String,
+    iconTint: Color,
     stationKeywords: List<StationKeyword>,
+    active: Boolean,
+    onActiveChange: (Boolean) -> Unit,
     onQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
     onItemClick: (Int) -> Unit,
+    onClear: () -> Unit,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(false) }
 
     Box(
         modifier
@@ -55,20 +61,21 @@ fun StationSpanSearchBar(
         DockedSearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 8.dp, bottom = 8.dp),
+                .fillMaxWidth()
+                .padding(12.dp),
             query = text,
             onQueryChange = {
-                active = it.isNotEmpty()
                 onQueryChange(it)
                 text = it
             },
-            onSearch = { active = false },
+            onSearch = onSearch,
             active = active,
-            onActiveChange = { },
-            placeholder = { Text("Hited search text") },
+            onActiveChange = onActiveChange,
+            placeholder = { Text(hint) },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Place,
+                    tint = iconTint,
                     contentDescription = null,
                 )
             },
@@ -82,8 +89,8 @@ fun StationSpanSearchBar(
                         modifier = Modifier
                             .clip(MaterialTheme.shapes.large)
                             .clickable {
-                                active = false
                                 text = ""
+                                onClear()
                             },
                         imageVector = Icons.Default.Clear,
                         contentDescription = null,
@@ -108,7 +115,6 @@ fun StationSpanSearchBar(
                         },
                         modifier = Modifier.clickable {
                             text = item.keyword
-                            active = false
                             onItemClick(item.stationId)
                         }
                     )
@@ -137,11 +143,21 @@ private fun PreviewStationSpanSearchBar() {
     StationDistanceCheckerTheme {
         StationSpanSearchBar(
             modifier = Modifier,
+            hint = "Example hint",
+            iconTint = MaterialTheme.colorScheme.primary,
             stationKeywords = listOf(
-                StationKeyword(0, "TEST", 1)
+                StationKeyword(0, "TEST 1", 1),
+                StationKeyword(1, "TEST 2", 2),
+                StationKeyword(3, "TEST 3", 3),
+                StationKeyword(4, "TEST 4", 4),
+                StationKeyword(5, "TEST 5", 5),
             ),
+            active = true,
+            onActiveChange = {},
             onQueryChange = {},
-            onItemClick = {}
+            onSearch = {},
+            onItemClick = {},
+            onClear = {},
         )
     }
 }

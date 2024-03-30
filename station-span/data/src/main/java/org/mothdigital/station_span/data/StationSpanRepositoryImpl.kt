@@ -20,6 +20,18 @@ class StationSpanRepositoryImpl(
     private val stationKeywordDao: StationKeywordDao,
 ) : StationSpanRepository {
 
+    override suspend fun getStation(id: Int): Station? {
+        runCatching {
+            updateIfNeeded()
+        }.onFailure {
+            if (it is CancellationException) {
+                throw it
+            }
+        }
+
+        return stationDao.getById(id)?.toDomain()
+    }
+
     override suspend fun getStations(ids: IntArray): List<Station> {
         runCatching {
             updateIfNeeded()

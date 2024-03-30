@@ -10,6 +10,9 @@ import org.mothdigital.station_span.domain.model.StationKeyword
 data class StationSpanState(
     val stations: List<Station> = emptyList(),
     val stationKeyword: List<StationKeyword> = emptyList(),
+    val selectedFirstStation: Station? = null,
+    val selectedSecondStation: Station? = null,
+    val distance: Meters = Meters(0L),
 )
 
 /**
@@ -17,6 +20,9 @@ data class StationSpanState(
  * passed to the coordinator to handle
  **/
 data class StationSpanActions(
-    val onClick: () -> Unit = {},
+    val onSelectFirstStation: (Int) -> Unit = {},
+    val onSelectSecondStation: (Int) -> Unit = {},
     val onQueryChange: (String) -> Unit = {},
+    val onFirstStationClear: () -> Unit = {},
+    val onSecondStationClear: () -> Unit = {},
 )
