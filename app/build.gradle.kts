@@ -64,6 +64,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":design"))
     implementation(project(":station-span"))
     implementation(project(":station-span:domain"))
     implementation(project(":station-span:data"))

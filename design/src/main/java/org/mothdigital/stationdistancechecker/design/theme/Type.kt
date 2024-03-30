@@ -1,4 +1,4 @@
-package org.mothdigital.stationdistancechecker.ui.theme
+package org.mothdigital.stationdistancechecker.design.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

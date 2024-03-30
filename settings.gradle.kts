@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":design")
+
+
 include(":station-span")
 include(":station-span:domain")
 include(":station-span:data")
