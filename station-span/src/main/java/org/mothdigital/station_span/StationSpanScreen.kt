@@ -1,92 +1,55 @@
 package org.mothdigital.station_span
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.DockedSearchBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import org.mothdigital.station_span.components.StationSpanSearchBar
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun StationSpanScreen(
     state: StationSpanState,
     actions: StationSpanActions,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(false) }
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val guideline = createGuidelineFromTop(0.25f)
+        val (searchBar1, searchBar2) = createRefs()
 
-    Box(Modifier.fillMaxSize()) {
-        Box(
-            Modifier
-                .zIndex(1f)
-                .fillMaxWidth()
-        ) {
-            DockedSearchBar(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 8.dp),
-                query = text,
-                onQueryChange = {
-                    active = it.isNotEmpty()
-                    actions.onQueryChange(it)
-                    text = it
+        StationSpanSearchBar(
+            modifier = Modifier
+                .padding(8.dp)
+                .zIndex(2f)
+                .constrainAs(searchBar1) {
+                    top.linkTo(parent.top, margin = 16.dp)
                 },
-                onSearch = { active = false },
-                active = active,
-                onActiveChange = { },
-                placeholder = { Text("Hited search text") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(0.dp),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    items(state.stationKeyword) { item ->
-                        val resultText = item.keyword
+            stationKeywords = state.stationKeyword,
+            onQueryChange = {
+                actions.onQueryChange(it)
+            },
+            onItemClick = {
 
-                        ListItem(
-                            headlineContent = { Text(resultText) },
-                            supportingContent = { Text("Additional info") },
-                            leadingContent = {
-                                Icon(
-                                    Icons.Filled.Star,
-                                    contentDescription = null
-                                )
-                            },
-                            modifier = Modifier.clickable {
-                                text = resultText
-                                active = false
-                            }
-                        )
-                    }
-                }
             }
-        }
+        )
+
+        StationSpanSearchBar(
+            modifier = Modifier
+                .padding(8.dp)
+                .zIndex(1f)
+                .constrainAs(searchBar2) {
+                    top.linkTo(guideline, margin = 16.dp)
+                },
+            stationKeywords = state.stationKeyword,
+            onQueryChange = {
+                actions.onQueryChange(it)
+            },
+            onItemClick = {
+
+            }
+        )
     }
 }
 

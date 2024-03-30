@@ -17,7 +17,7 @@ interface StationKeywordDao {
         JOIN station s ON sk.station_id = s.id
         WHERE sk.keyword LIKE :searchQuery
         ORDER BY s.hits DESC
-        LIMIT 10
+        LIMIT 5
         """
     )
     fun findStationsByKeyword(searchQuery: String): List<StationKeywordEntity>
