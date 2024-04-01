@@ -32,7 +32,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build the app
-        run: ./gradlew --stop --no-daemon clean build
+        run: ./gradlew --no-daemon clean build
 
       - name: Run tests
-        run: ./gradlew --stop --no-daemon check
+        run: ./gradlew --no-daemon check
