@@ -34,5 +34,8 @@ jobs:
       - name: Stop gradle daemon
         run: ./gradlew --stop
 
+      - name: Clean project
+        run: ./gradlew clean
+
       - name: Run :app check
         run: ./gradlew :app:testDebugUnitTest
