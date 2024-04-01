@@ -31,5 +31,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Stop gradle daemon
+        run: ./gradlew --stop
+
       - name: Run :app check
         run: ./gradlew :app:testDebugUnitTest
