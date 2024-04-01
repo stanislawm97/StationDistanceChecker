@@ -32,20 +32,6 @@ class StationSpanRepositoryImpl(
         return stationDao.getById(id)?.toDomain()
     }
 
-    override suspend fun getStations(ids: IntArray): List<Station> {
-        runCatching {
-            updateIfNeeded()
-        }.onFailure {
-            if (it is CancellationException) {
-                throw it
-            }
-        }
-
-        return stationDao.loadAllByIds(ids).map {
-            it.toDomain()
-        }
-    }
-
     override suspend fun getStationKeyword(query: String): List<StationKeyword> {
         runCatching {
             updateIfNeeded()
