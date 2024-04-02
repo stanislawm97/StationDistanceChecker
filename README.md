@@ -33,6 +33,59 @@ To run the application, you need a Google Maps API key. Obtain it from [Create A
 
 You can download the latest APK version from the [Releases](https://github.com/stanislawm97/StationDistanceChecker/releases) section in the GitHub repository and install it directly on your Android device.
 
+## Unit Testing
+
+The application leverages JUnit5 and MockK for unit testing, focusing on the business logic to ensure the components of the application function correctly without the need for running an Android environment.
+
+### Setting Up the Unit Testing Environment
+
+To run the unit tests, a JDK environment is required (version 17 is recommended) along with Gradle.
+
+### Running Unit Tests
+
+Unit tests can be run directly from Android Studio or via the command line. Instructions for both methods are provided below:
+
+#### Running from Android Studio
+
+1. Open the test class, e.g., `StationSpanRepositoryTest`, in Android Studio.
+2. Right-click on the class name or a specific test and select `Run 'StationSpanRepositoryTest'` or `Run 'testName'`.
+
+#### Running from the Command Line
+
+1. Open a terminal in the root directory of the project.
+2. Execute the following command to run all unit tests:
+   ```shell
+   ./gradlew test
+   ```
+
+## UI Tests
+
+The application utilizes Android Jetpack Compose for building its user interface and the `androidx.compose.ui.test` library for testing these UI components. UI tests focus on verifying user interactions with the application, such as searching for stations and calculating and displaying the distance between selected stations.
+
+### Setting Up the Environment for UI Tests
+
+To run the UI tests, you will need:
+
+1. Android Studio environment with Android SDK installed.
+2. An Android Emulator installed and configured or a physical device connected.
+
+### Running UI Tests
+
+UI tests can be run directly from Android Studio or using the command line. Below are the instructions for both methods:
+
+#### Running from Android Studio
+
+1. Open the test class `StationSearchDistanceTest` in Android Studio.
+2. Right-click on the class name or a test method and select `Run 'StationSearchDistanceTest'` or `Run 'testSearchAndDisplayDistanceBetweenStations'`.
+
+#### Running from Command Line
+
+1. Open a terminal in the root directory of the project.
+2. Execute the following command to run all UI tests:
+   ```shell
+   ./gradlew connectedAndroidTest
+   ```
+
 ## Continuous Integration (CI)
 
 The project uses GitHub Actions for automatically running unit tests for every pull request to the `main` and `dev` branches.
