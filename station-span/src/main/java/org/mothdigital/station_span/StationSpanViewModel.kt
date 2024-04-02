@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.mothdigital.station_span.domain.StationSpanRepository
+import org.mothdigital.station_span.domain.model.Meters
+import org.mothdigital.station_span.domain.model.toMeters
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -53,14 +55,12 @@ class StationSpanViewModel(
                 it.copy(
                     selectedFirstStation = station,
                     distance = if (station != null && it.selectedSecondStation != null) {
-                        Meters(
-                            calculateDistance(
-                                station.latitude,
-                                station.longitude,
-                                it.selectedSecondStation.latitude,
-                                it.selectedSecondStation.longitude,
-                            ).toLong()
-                        )
+                        calculateDistance(
+                            station.latitude,
+                            station.longitude,
+                            it.selectedSecondStation.latitude,
+                            it.selectedSecondStation.longitude,
+                        ).toLong().toMeters()
                     } else {
                         Meters(0L)
                     }

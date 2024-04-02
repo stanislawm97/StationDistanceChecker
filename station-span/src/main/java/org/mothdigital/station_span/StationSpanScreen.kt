@@ -1,17 +1,12 @@
 package org.mothdigital.station_span
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -19,10 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,10 +30,11 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
+import org.mothdigital.station_span.components.DistanceBetweenStations
+import org.mothdigital.station_span.components.MeasureDistanceTitle
 import org.mothdigital.station_span.components.StationSpanSearchBar
 import org.mothdigital.stationdistancechecker.design.theme.StationDistanceCheckerTheme
 import org.mothdigital.stationdistancechecker.station_span.R
-import kotlin.math.roundToLong
 
 
 @Composable
@@ -62,115 +56,100 @@ fun StationSpanScreen(
             targetValue = if (isDistance) 240.dp else 220.dp,
             label = "",
         )
+        
         val guideline = createGuidelineFromTop(guidelineAnim)
-        val (title, searchBar1, distance, searchBar2, background, map) = createRefs()
-        var searchBar1Active by rememberSaveable { mutableStateOf(false) }
-        var searchBar2Active by rememberSaveable { mutableStateOf(false) }
+        val (title, firstSearchBar, distance, secondSearchBar, background, map) = createRefs()
+        var firstStationSearchBarActive by rememberSaveable { mutableStateOf(false) }
+        var secondStationSearchBarActive by rememberSaveable { mutableStateOf(false) }
+        val polandLatLong = remember { LatLng(52.0, 19.0) }
+        val cameraPositionState = rememberCameraPositionState {
+            position = CameraPosition.fromLatLngZoom(polandLatLong, 5.5f)
+        }
 
-        Text(
+        MeasureDistanceTitle(
             modifier = Modifier
                 .zIndex(5f)
                 .constrainAs(title) {
                     top.linkTo(parent.top, margin = 12.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                },
-            text = stringResource(id = R.string.title_measure_distance),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
+                }
         )
 
         StationSpanSearchBar(
             modifier = Modifier
                 .zIndex(4f)
-                .constrainAs(searchBar1) {
+                .constrainAs(firstSearchBar) {
                     top.linkTo(title.bottom, margin = 6.dp)
                 },
             hint = stringResource(id = R.string.hint_start_typing_station_name),
             iconTint = Color.Red,
             stationKeywords = state.stationKeyword,
-            active = searchBar1Active,
+            active = firstStationSearchBarActive,
             onActiveChange = {
                 if (it) {
-                    searchBar2Active = false
+                    secondStationSearchBarActive = false
                 }
             },
             onQueryChange = {
-                searchBar1Active = it.isNotEmpty()
+                firstStationSearchBarActive = it.isNotEmpty()
                 actions.onQueryChange(it)
             },
             onItemClick = {
-                searchBar1Active = false
+                firstStationSearchBarActive = false
                 actions.onSelectFirstStation(it)
             },
             onSearch = {
-                searchBar1Active = false
+                firstStationSearchBarActive = false
             },
             onClear = {
-                searchBar1Active = false
+                firstStationSearchBarActive = false
                 actions.onFirstStationClear()
             }
         )
 
-        AnimatedVisibility(
+        DistanceBetweenStations(
             modifier = Modifier
                 .zIndex(3f)
                 .constrainAs(distance) {
-                    bottom.linkTo(searchBar2.top, (-18).dp)
+                    bottom.linkTo(secondSearchBar.top, (-18).dp)
                     start.linkTo(parent.start, 8.dp)
                     end.linkTo(parent.end)
 
                     width = Dimension.fillToConstraints
                 },
-            visible = isDistance,
-        ) {
-            Row(
-                modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    modifier = Modifier.size(64.dp),
-                    painter = painterResource(id = R.drawable.heights),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    contentDescription = null,
-                )
-                Text(
-                    text = "${state.distance.roundToKm()} km",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                )
-            }
-        }
-
+            isDistanceVisible = isDistance,
+            distance = state.distance,
+        )
 
         StationSpanSearchBar(
             modifier = Modifier
                 .zIndex(2f)
-                .constrainAs(searchBar2) {
+                .constrainAs(secondSearchBar) {
                     top.linkTo(guideline)
                 },
             hint = stringResource(id = R.string.hint_start_typing_station_name),
             iconTint = Color.Red,
             stationKeywords = state.stationKeyword,
-            active = searchBar2Active,
+            active = secondStationSearchBarActive,
             onActiveChange = {
                 if (it) {
-                    searchBar1Active = false
+                    firstStationSearchBarActive = false
                 }
             },
             onQueryChange = {
-                searchBar2Active = it.isNotEmpty()
+                secondStationSearchBarActive = it.isNotEmpty()
                 actions.onQueryChange(it)
             },
             onItemClick = {
-                searchBar2Active = false
+                secondStationSearchBarActive = false
                 actions.onSelectSecondStation(it)
             },
             onSearch = {
-                searchBar2Active = false
+                secondStationSearchBarActive = false
             },
             onClear = {
-                searchBar2Active = false
+                secondStationSearchBarActive = false
                 actions.onSecondStationClear()
             }
         )
@@ -186,10 +165,6 @@ fun StationSpanScreen(
                 },
         )
 
-        val singapore = LatLng(52.0, 19.0)
-        val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(singapore, 5.5f)
-        }
         GoogleMap(
             modifier = Modifier
                 .constrainAs(map) {
@@ -203,12 +178,12 @@ fun StationSpanScreen(
                 },
             cameraPositionState = cameraPositionState,
         ) {
-            val first =
+            val isFirstStationDrawable =
                 state.selectedFirstStation?.latitude != null && state.selectedFirstStation.longitude != null
-            val second =
+            val isSecondStationDrawable =
                 state.selectedSecondStation?.latitude != null && state.selectedSecondStation.longitude != null
 
-            if (first && second) {
+            if (isFirstStationDrawable && isSecondStationDrawable) {
                 Marker(
                     state = remember(state.selectedFirstStation) {
                         MarkerState(
@@ -252,25 +227,6 @@ fun StationSpanScreen(
         }
     }
 }
-
-@JvmInline
-value class Meters(val value: Long) {
-    override fun toString(): String {
-        return value.toString()
-    }
-}
-
-fun Long.toMeters() = Meters(this)
-
-@JvmInline
-value class Kilometers(val value: Long) {
-    override fun toString(): String {
-        return value.toString()
-    }
-}
-
-private fun Meters.roundToKm(): Kilometers =
-    Kilometers((value / 1000.0).roundToLong())
 
 @Composable
 @Preview(name = "StationSpan")

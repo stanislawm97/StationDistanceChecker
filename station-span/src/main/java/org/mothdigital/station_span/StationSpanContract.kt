@@ -2,6 +2,7 @@ package org.mothdigital.station_span
 
 import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
+import org.mothdigital.station_span.domain.model.Meters
 
 
 /**

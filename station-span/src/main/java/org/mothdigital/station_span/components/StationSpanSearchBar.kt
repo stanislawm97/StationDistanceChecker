@@ -56,9 +56,7 @@ fun StationSpanSearchBar(
     var text by rememberSaveable { mutableStateOf("") }
 
     Box(
-        modifier
-            .zIndex(1f)
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         DockedSearchBar(
             modifier = Modifier
