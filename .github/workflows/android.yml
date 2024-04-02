@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Tests
+    name: Build and Tests
     runs-on: self-hosted
 
     steps:
@@ -31,5 +31,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Run :app check
-        run: ./gradlew :app:testDebugUnitTest
+      - name: Run Build
+        run: ./gradlew assemble
+
+      - name: Run Check
+        run: ./gradlew check
