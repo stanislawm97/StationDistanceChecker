@@ -10,5 +10,6 @@ class CheckModulesTest {
     @Test
     fun checkMainApplicationModule() {
         mainApplicationModule.verify()
+        assert(false)
     }
 }
