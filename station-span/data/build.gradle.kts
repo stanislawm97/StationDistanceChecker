@@ -51,6 +51,7 @@ dependencies {
     testImplementation(libs.koin.test.junit4)
     testImplementation(libs.jupiter)
     testImplementation(libs.jupiter.api)
+    testImplementation(libs.jupiter.params)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
