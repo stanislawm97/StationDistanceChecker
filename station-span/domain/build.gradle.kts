@@ -9,6 +9,7 @@ java {
 }
 
 dependencies {
+    implementation(libs.kotlin.coroutines.core)
     implementation(libs.koin.core)
 
     testImplementation(libs.junit)

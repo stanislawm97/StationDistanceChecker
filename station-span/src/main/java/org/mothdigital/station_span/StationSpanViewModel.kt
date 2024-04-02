@@ -13,9 +13,11 @@ import kotlinx.coroutines.launch
 import org.mothdigital.station_span.domain.StationSpanRepository
 import org.mothdigital.station_span.domain.model.Meters
 import org.mothdigital.station_span.domain.usecase.CalculateDistanceUseCase
+import org.mothdigital.station_span.domain.usecase.FetchStationKeywordsUseCase
 
 class StationSpanViewModel(
     private val stationSpanRepository: StationSpanRepository,
+    private val fetchStationKeywordsUseCase: FetchStationKeywordsUseCase,
     private val calculateDistanceUseCase: CalculateDistanceUseCase,
 ) : ViewModel() {
 
@@ -27,15 +29,7 @@ class StationSpanViewModel(
     fun fetchStationKeywords(query: String) {
         fetchStationKeywordsJob?.cancel()
         fetchStationKeywordsJob = viewModelScope.launch(Dispatchers.IO) {
-            val stationKeywords = runCatching {
-                stationSpanRepository.getStationKeyword(query)
-            }.onFailure {
-                if(it is CancellationException) {
-                    throw it
-                } else {
-                    it.printStackTrace()
-                }
-            }.getOrDefault(emptyList())
+            val stationKeywords = fetchStationKeywordsUseCase(query)
 
             _stateFlow.update {
                 it.copy(stationKeyword = stationKeywords)
