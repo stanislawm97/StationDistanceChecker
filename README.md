@@ -13,7 +13,7 @@ An Android application for calculating the distance between two railway stations
 The application utilizes the following technologies and libraries:
 
 - Kotlin
-- Android Jetpack (Compose, ViewModel, LiveData, Room) - Room is used to store data about stations and distances locally on the device, allowing for fast access and operations even without network access.
+- Android Jetpack (Compose, ViewModel, Flow, Room) - Room is used to store data about stations and distances locally on the device, allowing for fast access and operations even without network access.
 - Google Maps API
 - Retrofit - for API communication
 - Koin - as a dependency management system
