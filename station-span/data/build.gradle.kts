@@ -52,6 +52,8 @@ dependencies {
     testImplementation(libs.jupiter)
     testImplementation(libs.jupiter.api)
     testImplementation(libs.jupiter.params)
+    testImplementation(libs.jupiter.engine)
+    testImplementation(libs.mockk)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
