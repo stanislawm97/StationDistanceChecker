@@ -31,11 +31,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import org.mothdigital.station_span.domain.model.StationKeyword
 import org.mothdigital.stationdistancechecker.design.theme.StationDistanceCheckerTheme
+import org.mothdigital.stationdistancechecker.station_span.R
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,15 +107,9 @@ fun StationSpanSearchBar(
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 items(stationKeywords) { item ->
-                    ListItem(
-                        headlineContent = { Text(item.keyword) },
-                        leadingContent = {
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = null,
-                            )
-                        },
-                        modifier = Modifier.clickable {
+                    StationListItem(
+                        stationKeyword = item,
+                        onClick = {
                             text = item.keyword
                             onItemClick(item.stationId)
                         }
@@ -121,15 +117,7 @@ fun StationSpanSearchBar(
                 }
                 if (stationKeywords.isEmpty()) {
                     item {
-                        ListItem(
-                            headlineContent = { Text("Nie znaleziono żadnej stacji") },
-                            leadingContent = {
-                                Icon(
-                                    imageVector = Icons.Default.Warning,
-                                    contentDescription = null,
-                                )
-                            },
-                        )
+                        NoStationsFoundListItem()
                     }
                 }
             }
