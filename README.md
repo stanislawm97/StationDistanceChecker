@@ -1,0 +1,60 @@
+# Station Distance Checker
+
+An Android application for calculating the distance between two railway stations. It calculates the distance between selected stations and utilizes the Google Maps API for data visualization on the map. The application is written in Kotlin and uses the latest practices and tools from the Android ecosystem.
+
+## Features
+
+- Searching for railway stations by name.
+- Calculating the distance between selected stations.
+- Displaying results on the map.
+
+## Used Technologies and Libraries
+
+The application utilizes the following technologies and libraries:
+
+- Kotlin
+- Android Jetpack (Compose, ViewModel, LiveData, Room) - Room is used to store data about stations and distances locally on the device, allowing for fast access and operations even without network access.
+- Google Maps API
+- Retrofit - for API communication
+- Koin - as a dependency management system
+- Coroutines - for asynchronous operation handling
+- JUnit, MockK - for testing
+- and others [full list](https://github.com/stanislawm97/StationDistanceChecker/blob/main/gradle/libs.versions.toml)
+
+## Running the Application
+
+To run the application, you have two options:
+
+### Option 1: Running from Source Code
+
+To run the application, you need a Google Maps API key. Obtain it from [Create API keys](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#create-api-keys) and add it to the `local.defaults.properties` file by replacing `MAPS_API_KEY=DEFAULT_API_KEY` with your own API key.
+
+### Option 2: Installing the APK from Releases
+
+You can download the latest APK version from the [Releases](https://github.com/stanislawm97/StationDistanceChecker/releases) section in the GitHub repository and install it directly on your Android device.
+
+## Continuous Integration (CI)
+
+The project uses GitHub Actions for automatically running unit tests for every pull request to the `main` and `dev` branches.
+
+### CI Workflow
+
+The CI process consists of the following steps:
+
+- **Check out code**: Clones the repository for running GitHub actions.
+- **Install Unzip**: Prepares the environment by installing necessary tools.
+- **Set up JDK 17**: Configures Java Development Kit 17 for building Android projects.
+- **Set up Android SDK**: Prepares the Android SDK environment for building and testing the application.
+- **Grant execute permission for gradlew**: Ensures the Gradle wrapper script is executable.
+- **Run Check**: Executes the `./gradlew check` command, which runs all configured checks, such as unit tests.
+
+The workflow is defined in the `.github/workflows` directory of the repository and is triggered for every pull request to the `main` and `dev` branches. It runs on a self-hosted runner, ensuring a consistent and controlled testing environment.
+
+### CI Environment Settings
+
+The CI process is designed to run on a self-hosted machine, which requires manual configuration. To replicate the CI environment or configure a new self-hosted runner, ensure the following requirements are met:
+
+1. **Self-Hosted Runner**: Follow [GitHub's documentation](https://docs.github.com/en/actions/hosting-your-own-runners) to set up a self-hosted runner.
+2. **JDK 17**: Install JDK 17, which is required for building Android projects.
+3. **Android SDK**: Install and configure the Android SDK with necessary tools and platforms.
+4. **Environment Variables**: Set up any necessary environment variables, such as `ANDROID_HOME`, pointing to the location of the Android SDK.
