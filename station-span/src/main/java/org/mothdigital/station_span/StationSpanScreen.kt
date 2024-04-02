@@ -16,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -78,6 +79,7 @@ fun StationSpanScreen(
 
         StationSpanSearchBar(
             modifier = Modifier
+                .testTag("firstSearchBar")
                 .zIndex(4f)
                 .constrainAs(firstSearchBar) {
                     top.linkTo(title.bottom, margin = 6.dp)
@@ -110,6 +112,7 @@ fun StationSpanScreen(
 
         DistanceBetweenStations(
             modifier = Modifier
+                .testTag("distance")
                 .zIndex(3f)
                 .constrainAs(distance) {
                     bottom.linkTo(secondSearchBar.top, (-18).dp)
@@ -124,6 +127,7 @@ fun StationSpanScreen(
 
         StationSpanSearchBar(
             modifier = Modifier
+                .testTag("secondSearchBar")
                 .zIndex(2f)
                 .constrainAs(secondSearchBar) {
                     top.linkTo(guideline)

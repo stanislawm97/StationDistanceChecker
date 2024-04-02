@@ -7,6 +7,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.mothdigital.station_span.data.di.stationSpanDataModule
 import org.mothdigital.station_span.di.stationSpanModule
+import org.mothdigital.station_span.domain.di.stationSpanDomainModule
 import org.mothdigital.stationdistancechecker.BuildConfig
 import org.mothdigital.stationdistancechecker.api.HeaderInterceptor
 import org.mothdigital.stationdistancechecker.database.AppDatabase
@@ -16,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val mainApplicationModule = module {
     includes(
         stationSpanModule,
+        stationSpanDomainModule,
         stationSpanDataModule,
     )
 
