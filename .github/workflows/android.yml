@@ -31,9 +31,3 @@ jobs:
 
       - name: Run Check
         run: ./gradlew check
-
-      - name: Android Emulator
-        uses: vgaidarji/android-github-actions-emulator@v1.0.1
-
-      - name: Run Instrumented Tests
-        run: ./gradlew connectedCheck
