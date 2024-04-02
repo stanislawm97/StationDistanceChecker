@@ -75,7 +75,7 @@ fun StationSpanScreen(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-            text = "Zmierz odleglosc pomiędzy stacjami",
+            text = stringResource(id = R.string.title_measure_distance),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimary,
         )

@@ -1,3 +1,4 @@
 <resources>
     <string name="hint_start_typing_station_name">Enter station name…</string>
+    <string name="title_measure_distance">Measure the distance between train stations</string>
 </resources>
