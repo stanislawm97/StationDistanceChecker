@@ -9,5 +9,17 @@ java {
 }
 
 dependencies {
+    implementation(libs.kotlin.coroutines.core)
     implementation(libs.koin.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.jupiter)
+    testImplementation(libs.jupiter.api)
+    testImplementation(libs.jupiter.params)
+    testImplementation(libs.mockk)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

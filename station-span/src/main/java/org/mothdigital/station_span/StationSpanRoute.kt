@@ -24,8 +24,11 @@ fun StationSpanRoute(
 fun rememberStationSpanActions(coordinator: StationSpanCoordinator): StationSpanActions {
     return remember(coordinator) {
         StationSpanActions(
-            onClick = coordinator::doStuff,
-            onQueryChange = coordinator::onQueryChange
+            onQueryChange = coordinator::onQueryChange,
+            onSelectFirstStation = coordinator::onSelectFirstStation,
+            onSelectSecondStation = coordinator::onSelectSecondStation,
+            onFirstStationClear = coordinator::onFirstStationClear,
+            onSecondStationClear = coordinator::onSecondStationClear,
         )
     }
 }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="hint_start_typing_station_name">Wpisz nazwę stacji…</string>
+    <string name="title_measure_distance">Zmierz odleglosc pomiędzy stacjami</string>
+    <string name="no_stations_found">Nie znaleziono żadnej stacji</string>
+</resources>

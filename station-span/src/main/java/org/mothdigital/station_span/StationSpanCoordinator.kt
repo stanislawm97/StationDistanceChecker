@@ -13,16 +13,24 @@ class StationSpanCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
-    init {
-        viewModel.fetchStations()
-    }
-
-    fun doStuff() {
-        // TODO Handle UI Action
-    }
-
     fun onQueryChange(query: String) {
         viewModel.fetchStationKeywords(query)
+    }
+
+    fun onSelectFirstStation(id: Int) {
+        viewModel.selectFirstStation(id)
+    }
+
+    fun onSelectSecondStation(id: Int) {
+        viewModel.selectSecondStation(id)
+    }
+
+    fun onFirstStationClear() {
+        viewModel.clearFirstStation()
+    }
+
+    fun onSecondStationClear() {
+        viewModel.clearSecondStation()
     }
 }
 

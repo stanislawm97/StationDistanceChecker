@@ -31,10 +31,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":design"))
     implementation(project(":station-span:domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -57,4 +59,7 @@ dependencies {
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
 }

@@ -20,7 +20,7 @@ class StationSpanRepositoryImpl(
     private val stationKeywordDao: StationKeywordDao,
 ) : StationSpanRepository {
 
-    override suspend fun getStations(ids: IntArray): List<Station> {
+    override suspend fun getStation(id: Int): Station? {
         runCatching {
             updateIfNeeded()
         }.onFailure {
@@ -29,9 +29,7 @@ class StationSpanRepositoryImpl(
             }
         }
 
-        return stationDao.loadAllByIds(ids).map {
-            it.toDomain()
-        }
+        return stationDao.getById(id)?.toDomain()
     }
 
     override suspend fun getStationKeyword(query: String): List<StationKeyword> {
