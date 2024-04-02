@@ -21,7 +21,7 @@ val LightColorScheme = lightColorScheme(
     onBackground = Color.Black,
     surface = Color.White,
     onSurface = Color.Black,
-    error = Color(0xFFB00020), // Using a common error color for simplicity
+    error = Color(0xFFB00020),
     onError = Color.White
 )
 
@@ -32,9 +32,9 @@ val DarkColorScheme = darkColorScheme(
     onSecondary = Color.Black,
     background = VeryLightGray40,
     onBackground = Color.White,
-    surface = Color(0xFF121212), // A common surface color for dark themes
+    surface = Color(0xFF121212),
     onSurface = Color.White,
-    error = Color(0xFFCF6679), // A common error color for dark themes, adjusted for contrast
+    error = Color(0xFFCF6679),
     onError = Color.Black
 )
 
