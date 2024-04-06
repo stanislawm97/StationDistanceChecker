@@ -93,27 +93,87 @@ class StationSpanRepositoryTest {
     }
 
     @Test
-    fun `getStationKeyword returns list of station keywords`() = runBlocking {
+    fun `getStationByKeyword returns list of stations`() = runBlocking {
         val query = "Station"
-        val mockKeywords = listOf(
-            StationKeywordEntity(id = 1, keyword = "Station A", stationId = 1),
-            StationKeywordEntity(id = 2, keyword = "Station B", stationId = 2)
+        val mockStations = listOf(
+            StationEntity(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
+                id = 1,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
+            ),
+            StationEntity(
+                city = "City B",
+                country = "Country B",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 2,
+                id = 2,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name B",
+                longitude = 10.0,
+                name = "Station B",
+                nameSlug = "station-b",
+                region = "Region B"
+            ),
         )
         val expected = listOf(
-            StationKeyword(id = 1, keyword = "Station A", stationId = 1),
-            StationKeyword(id = 2, keyword = "Station B", stationId = 2)
+            Station(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
+                id = 1,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
+            ),
+            Station(
+                city = "City B",
+                country = "Country B",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 2,
+                id = 2,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name B",
+                longitude = 10.0,
+                name = "Station B",
+                nameSlug = "station-b",
+                region = "Region B"
+            )
         )
 
-        coEvery { stationKeywordDao.findStationsByKeyword("%$query%") } returns mockKeywords
+        coEvery { stationDao.findStationsByKeyword("%$query%") } returns mockStations
 
-        val actual = repository.getStationKeyword(query)
+        val actual = repository.getStationByKeyword(query)
 
         assertEquals(expected, actual)
-        verify(exactly = 1) { stationKeywordDao.findStationsByKeyword("%$query%") }
+        verify(exactly = 1) { stationDao.findStationsByKeyword("%$query%") }
     }
 
     @Test
-    fun `getStationKeyword triggers update when data is stale`() = runBlocking {
+    fun `getStationByKeyword triggers update when data is stale`() = runBlocking {
         val query = "Keyword A"
         val currentTime = System.currentTimeMillis()
         val staleTime = currentTime - 25.hours.inWholeMilliseconds
@@ -146,22 +206,33 @@ class StationSpanRepositoryTest {
         )
         coEvery { stationDao.insertAll(any()) } just Runs
         coEvery { stationKeywordDao.insertAll(any()) } just Runs
-        coEvery { stationKeywordDao.findStationsByKeyword(any()) } returns listOf(
-            StationKeywordEntity(
+        coEvery { stationDao.findStationsByKeyword(any()) } returns listOf(
+            StationEntity(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
                 id = 1,
-                keyword = "Keyword A",
-                stationId = 1
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
             )
         )
 
-        repository.getStationKeyword(query)
+        repository.getStationByKeyword(query)
 
         coVerify(exactly = 1) { koleoApi.fetchStations() }
         coVerify(exactly = 1) { koleoApi.fetchStationKeywords() }
     }
 
     @Test
-    fun `getStationKeyword handles data fetch failure gracefully`() = runBlocking {
+    fun `getStationByKeyword handles data fetch failure gracefully`() = runBlocking {
         val query = "Test"
         val currentTime = System.currentTimeMillis()
         val staleTime = currentTime - 25.hours.inWholeMilliseconds
@@ -170,21 +241,32 @@ class StationSpanRepositoryTest {
         coEvery { fetchTimeDao.getFetchTime() } returns FetchTimeEntity(time = staleTime)
         coEvery { koleoApi.fetchStations() } throws exception
         coEvery { koleoApi.fetchStationKeywords() } throws exception
-        coEvery { stationKeywordDao.findStationsByKeyword(any()) } returns listOf(
-            StationKeywordEntity(
+        coEvery { stationDao.findStationsByKeyword(any()) } returns listOf(
+            StationEntity(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
                 id = 1,
-                keyword = "Keyword A",
-                stationId = 1,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
             )
         )
 
-        val result = repository.getStationKeyword(query)
+        val result = repository.getStationByKeyword(query)
 
         assertTrue(result.isNotEmpty())
     }
 
     @Test
-    fun `getStationKeyword throws CancellationException when data fetch is cancelled`() =
+    fun `getStationByKeyword throws CancellationException when data fetch is cancelled`() =
         runBlocking {
             val query = "Test"
             val exception = CancellationException("Fetching data was cancelled")
@@ -193,7 +275,7 @@ class StationSpanRepositoryTest {
             coEvery { koleoApi.fetchStations() } throws exception
             coEvery { koleoApi.fetchStationKeywords() } throws exception
 
-            val job = async { repository.getStationKeyword(query) }
+            val job = async { repository.getStationByKeyword(query) }
 
             job.join()
 

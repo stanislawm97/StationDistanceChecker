@@ -14,12 +14,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,14 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
 import org.mothdigital.stationdistancechecker.design.theme.StationDistanceCheckerTheme
-import org.mothdigital.stationdistancechecker.station_span.R
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +40,7 @@ fun StationSpanSearchBar(
     modifier: Modifier = Modifier,
     hint: String,
     iconTint: Color,
-    stationKeywords: List<StationKeyword>,
+    stations: List<Station>,
     active: Boolean,
     onActiveChange: (Boolean) -> Unit,
     onQueryChange: (String) -> Unit,
@@ -105,16 +99,16 @@ fun StationSpanSearchBar(
                 contentPadding = PaddingValues(0.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
-                items(stationKeywords) { item ->
+                items(stations) { item ->
                     StationListItem(
-                        stationKeyword = item,
+                        station = item,
                         onClick = {
-                            text = item.keyword
-                            onItemClick(item.stationId)
+                            item.name?.let { text = it }
+                            item.id?.let { onItemClick(it) }
                         }
                     )
                 }
-                if (stationKeywords.isEmpty()) {
+                if (stations.isEmpty()) {
                     item {
                         NoStationsFoundListItem()
                     }
@@ -132,12 +126,55 @@ private fun PreviewStationSpanSearchBar() {
             modifier = Modifier,
             hint = "Example hint",
             iconTint = MaterialTheme.colorScheme.primary,
-            stationKeywords = listOf(
-                StationKeyword(0, "TEST 1", 1),
-                StationKeyword(1, "TEST 2", 2),
-                StationKeyword(3, "TEST 3", 3),
-                StationKeyword(4, "TEST 4", 4),
-                StationKeyword(5, "TEST 5", 5),
+            stations = listOf(
+                Station(
+                    city = null,
+                    country = null,
+                    hasAnnouncements = null,
+                    hits = 1,
+                    ibnr = null,
+                    id = 1,
+                    isGroup = null,
+                    isNearbyStationEnabled = null,
+                    latitude = 0.0,
+                    localisedName = null,
+                    longitude = 0.0,
+                    name = "TEST 1",
+                    nameSlug = null,
+                    region = null,
+                ),
+                Station(
+                    city = null,
+                    country = null,
+                    hasAnnouncements = null,
+                    hits = 1,
+                    ibnr = null,
+                    id = 1,
+                    isGroup = null,
+                    isNearbyStationEnabled = null,
+                    latitude = 0.0,
+                    localisedName = null,
+                    longitude = 0.0,
+                    name = "TEST 2",
+                    nameSlug = null,
+                    region = null,
+                ),
+                Station(
+                    city = null,
+                    country = null,
+                    hasAnnouncements = null,
+                    hits = 1,
+                    ibnr = null,
+                    id = 1,
+                    isGroup = null,
+                    isNearbyStationEnabled = null,
+                    latitude = 0.0,
+                    localisedName = null,
+                    longitude = 0.0,
+                    name = "TEST 3",
+                    nameSlug = null,
+                    region = null,
+                ),
             ),
             active = true,
             onActiveChange = {},

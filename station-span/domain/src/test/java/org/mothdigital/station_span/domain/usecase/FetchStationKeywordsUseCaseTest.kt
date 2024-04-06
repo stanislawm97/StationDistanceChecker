@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mothdigital.station_span.domain.StationSpanRepository
+import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
 
 @ExtendWith(MockKExtension::class)
@@ -24,25 +25,42 @@ class FetchStationKeywordsUseCaseTest {
     lateinit var fetchStationKeywordsUseCase: FetchStationKeywordsUseCase
 
     @Test
-    fun `invoke returns list of StationKeyword when repository succeeds`() = runBlocking {
+    fun `invoke returns list of Station when repository succeeds`() = runBlocking {
         // Given
-        val query = "test"
-        val expectedKeywords = listOf(StationKeyword(id = 1, keyword = "Test Station", stationId = 123))
-        coEvery { stationSpanRepository.getStationKeyword(query) } returns expectedKeywords
+        val query = "Station"
+        val expectedKeywords = listOf(
+            Station(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
+                id = 1,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
+            )
+        )
+        coEvery { stationSpanRepository.getStationByKeyword(query) } returns expectedKeywords
 
         // When
         val result = fetchStationKeywordsUseCase(query)
 
         // Then
         assertEquals(expectedKeywords, result)
-        coVerify(exactly = 1) { stationSpanRepository.getStationKeyword(query) }
+        coVerify(exactly = 1) { stationSpanRepository.getStationByKeyword(query) }
     }
 
     @Test
     fun `invoke returns empty list when repository fails`() = runBlocking {
         // Given
         val query = "test"
-        coEvery { stationSpanRepository.getStationKeyword(query) } throws Exception()
+        coEvery { stationSpanRepository.getStationByKeyword(query) } throws Exception()
 
         // When
         val result = fetchStationKeywordsUseCase(query)
@@ -57,7 +75,7 @@ class FetchStationKeywordsUseCaseTest {
         val query = "test"
         val cancellationException = kotlinx.coroutines.CancellationException("Cancelled")
 
-        coEvery { stationSpanRepository.getStationKeyword(query) } throws cancellationException
+        coEvery { stationSpanRepository.getStationByKeyword(query) } throws cancellationException
 
         // Then
         val job = async { fetchStationKeywordsUseCase(query) }

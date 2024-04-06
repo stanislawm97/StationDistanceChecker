@@ -10,7 +10,6 @@ import org.mothdigital.station_span.domain.model.Meters
  **/
 data class StationSpanState(
     val stations: List<Station> = emptyList(),
-    val stationKeyword: List<StationKeyword> = emptyList(),
     val selectedFirstStation: Station? = null,
     val selectedSecondStation: Station? = null,
     val distance: Meters = Meters(0L),

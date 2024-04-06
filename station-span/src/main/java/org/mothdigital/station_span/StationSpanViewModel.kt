@@ -2,7 +2,6 @@ package org.mothdigital.station_span
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,10 +28,10 @@ class StationSpanViewModel(
     fun fetchStationKeywords(query: String) {
         fetchStationKeywordsJob?.cancel()
         fetchStationKeywordsJob = viewModelScope.launch(Dispatchers.IO) {
-            val stationKeywords = fetchStationKeywordsUseCase(query)
+            val stations = fetchStationKeywordsUseCase(query)
 
             _stateFlow.update {
-                it.copy(stationKeyword = stationKeywords)
+                it.copy(stations = stations)
             }
         }
     }

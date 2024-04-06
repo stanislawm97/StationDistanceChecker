@@ -86,7 +86,7 @@ fun StationSpanScreen(
                 },
             hint = stringResource(id = R.string.hint_start_typing_station_name),
             iconTint = Color.Red,
-            stationKeywords = state.stationKeyword,
+            stations = state.stations,
             active = firstStationSearchBarActive,
             onActiveChange = {
                 if (it) {
@@ -134,7 +134,7 @@ fun StationSpanScreen(
                 },
             hint = stringResource(id = R.string.hint_start_typing_station_name),
             iconTint = Color.Red,
-            stationKeywords = state.stationKeyword,
+            stations = state.stations,
             active = secondStationSearchBarActive,
             onActiveChange = {
                 if (it) {

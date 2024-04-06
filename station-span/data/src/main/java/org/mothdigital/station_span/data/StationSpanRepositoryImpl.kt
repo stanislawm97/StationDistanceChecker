@@ -9,7 +9,6 @@ import org.mothdigital.station_span.data.mapper.toEntity
 import org.mothdigital.station_span.data.mapper.toFetchTimeEntity
 import org.mothdigital.station_span.domain.StationSpanRepository
 import org.mothdigital.station_span.domain.model.Station
-import org.mothdigital.station_span.domain.model.StationKeyword
 import java.util.concurrent.CancellationException
 import kotlin.time.Duration.Companion.hours
 
@@ -32,7 +31,7 @@ class StationSpanRepositoryImpl(
         return stationDao.getById(id)?.toDomain()
     }
 
-    override suspend fun getStationKeyword(query: String): List<StationKeyword> {
+    override suspend fun getStationByKeyword(keyword: String): List<Station> {
         runCatching {
             updateIfNeeded()
         }.onFailure {
@@ -41,7 +40,7 @@ class StationSpanRepositoryImpl(
             }
         }
 
-        return stationKeywordDao.findStationsByKeyword("%$query%").map {
+        return stationDao.findStationsByKeyword("%$keyword%").map {
             it.toDomain()
         }
     }

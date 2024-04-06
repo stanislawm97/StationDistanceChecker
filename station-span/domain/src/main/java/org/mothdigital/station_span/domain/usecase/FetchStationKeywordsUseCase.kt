@@ -1,6 +1,7 @@
 package org.mothdigital.station_span.domain.usecase
 
 import org.mothdigital.station_span.domain.StationSpanRepository
+import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -27,9 +28,9 @@ class FetchStationKeywordsUseCase(
     private val stationSpanRepository: StationSpanRepository,
 ) {
 
-    suspend operator fun invoke(query: String): List<StationKeyword> {
+    suspend operator fun invoke(query: String): List<Station> {
         return runCatching {
-            stationSpanRepository.getStationKeyword(query)
+            stationSpanRepository.getStationByKeyword(query)
         }.onFailure {
             if(it is CancellationException) {
                 throw it
