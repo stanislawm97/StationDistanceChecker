@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mothdigital.station_span.domain.StationSpanRepository
+import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
 
 @ExtendWith(MockKExtension::class)
@@ -24,10 +25,27 @@ class FetchStationKeywordsUseCaseTest {
     lateinit var fetchStationKeywordsUseCase: FetchStationKeywordsUseCase
 
     @Test
-    fun `invoke returns list of StationKeyword when repository succeeds`() = runBlocking {
+    fun `invoke returns list of Station when repository succeeds`() = runBlocking {
         // Given
-        val query = "test"
-        val expectedKeywords = listOf(StationKeyword(id = 1, keyword = "Test Station", stationId = 123))
+        val query = "Station"
+        val expectedKeywords = listOf(
+            Station(
+                city = "City A",
+                country = "Country A",
+                hasAnnouncements = true,
+                hits = 100,
+                ibnr = 1,
+                id = 1,
+                isGroup = false,
+                isNearbyStationEnabled = true,
+                latitude = 50.0,
+                localisedName = "Local Name A",
+                longitude = 10.0,
+                name = "Station A",
+                nameSlug = "station-a",
+                region = "Region A"
+            )
+        )
         coEvery { stationSpanRepository.getStationByKeyword(query) } returns expectedKeywords
 
         // When
