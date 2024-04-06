@@ -10,18 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.mothdigital.station_span.domain.model.Station
 import org.mothdigital.station_span.domain.model.StationKeyword
 import org.mothdigital.stationdistancechecker.design.theme.StationDistanceCheckerTheme
 
 @Composable
 fun StationListItem(
     modifier: Modifier = Modifier,
-    stationKeyword: StationKeyword,
+    station: Station,
     onClick: () -> Unit,
 ) {
     Box(modifier) {
         ListItem(
-            headlineContent = { Text(stationKeyword.keyword) },
+            headlineContent = { Text(station.name.toString()) },
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Star,
@@ -38,7 +39,22 @@ fun StationListItem(
 private fun PreviewStationListItem() {
     StationDistanceCheckerTheme {
         StationListItem(
-            stationKeyword = StationKeyword(1, "Keyword", 1),
+            station = Station(
+                city = null,
+                country = null,
+                hasAnnouncements = null,
+                hits = 1,
+                ibnr = null,
+                id = 1,
+                isGroup = null,
+                isNearbyStationEnabled = null,
+                latitude = 0.0,
+                localisedName = null,
+                longitude = 0.0,
+                name = "Keyword",
+                nameSlug = null,
+                region = null,
+            ),
             onClick = {}
         )
     }

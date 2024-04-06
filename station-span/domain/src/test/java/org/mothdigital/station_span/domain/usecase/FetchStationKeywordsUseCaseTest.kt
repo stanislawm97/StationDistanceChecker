@@ -28,21 +28,21 @@ class FetchStationKeywordsUseCaseTest {
         // Given
         val query = "test"
         val expectedKeywords = listOf(StationKeyword(id = 1, keyword = "Test Station", stationId = 123))
-        coEvery { stationSpanRepository.getStationKeyword(query) } returns expectedKeywords
+        coEvery { stationSpanRepository.getStationByKeyword(query) } returns expectedKeywords
 
         // When
         val result = fetchStationKeywordsUseCase(query)
 
         // Then
         assertEquals(expectedKeywords, result)
-        coVerify(exactly = 1) { stationSpanRepository.getStationKeyword(query) }
+        coVerify(exactly = 1) { stationSpanRepository.getStationByKeyword(query) }
     }
 
     @Test
     fun `invoke returns empty list when repository fails`() = runBlocking {
         // Given
         val query = "test"
-        coEvery { stationSpanRepository.getStationKeyword(query) } throws Exception()
+        coEvery { stationSpanRepository.getStationByKeyword(query) } throws Exception()
 
         // When
         val result = fetchStationKeywordsUseCase(query)
@@ -57,7 +57,7 @@ class FetchStationKeywordsUseCaseTest {
         val query = "test"
         val cancellationException = kotlinx.coroutines.CancellationException("Cancelled")
 
-        coEvery { stationSpanRepository.getStationKeyword(query) } throws cancellationException
+        coEvery { stationSpanRepository.getStationByKeyword(query) } throws cancellationException
 
         // Then
         val job = async { fetchStationKeywordsUseCase(query) }

@@ -106,7 +106,7 @@ class StationSpanRepositoryTest {
 
         coEvery { stationKeywordDao.findStationsByKeyword("%$query%") } returns mockKeywords
 
-        val actual = repository.getStationKeyword(query)
+        val actual = repository.getStationByKeyword(query)
 
         assertEquals(expected, actual)
         verify(exactly = 1) { stationKeywordDao.findStationsByKeyword("%$query%") }
@@ -154,7 +154,7 @@ class StationSpanRepositoryTest {
             )
         )
 
-        repository.getStationKeyword(query)
+        repository.getStationByKeyword(query)
 
         coVerify(exactly = 1) { koleoApi.fetchStations() }
         coVerify(exactly = 1) { koleoApi.fetchStationKeywords() }
@@ -178,7 +178,7 @@ class StationSpanRepositoryTest {
             )
         )
 
-        val result = repository.getStationKeyword(query)
+        val result = repository.getStationByKeyword(query)
 
         assertTrue(result.isNotEmpty())
     }
@@ -193,7 +193,7 @@ class StationSpanRepositoryTest {
             coEvery { koleoApi.fetchStations() } throws exception
             coEvery { koleoApi.fetchStationKeywords() } throws exception
 
-            val job = async { repository.getStationKeyword(query) }
+            val job = async { repository.getStationByKeyword(query) }
 
             job.join()
 
