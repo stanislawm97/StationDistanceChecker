@@ -76,7 +76,7 @@ fun StationSpanSearchBar(
             },
             trailingIcon = {
                 AnimatedVisibility(
-                    visible = text.isNotEmpty(),
+                    visible = active,
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ) {

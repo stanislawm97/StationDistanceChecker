@@ -89,12 +89,13 @@ fun StationSpanScreen(
             stations = state.stations,
             active = firstStationSearchBarActive,
             onActiveChange = {
+                firstStationSearchBarActive = it
                 if (it) {
                     secondStationSearchBarActive = false
+                    actions.onQueryChange("")
                 }
             },
             onQueryChange = {
-                firstStationSearchBarActive = it.isNotEmpty()
                 actions.onQueryChange(it)
             },
             onItemClick = {
@@ -137,12 +138,13 @@ fun StationSpanScreen(
             stations = state.stations,
             active = secondStationSearchBarActive,
             onActiveChange = {
+                secondStationSearchBarActive = it
                 if (it) {
                     firstStationSearchBarActive = false
+                    actions.onQueryChange("")
                 }
             },
             onQueryChange = {
-                secondStationSearchBarActive = it.isNotEmpty()
                 actions.onQueryChange(it)
             },
             onItemClick = {
