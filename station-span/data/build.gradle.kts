@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "org.mothdigital.station_span.data"
+    namespace = "org.mothdigital.stationdistancechecker.stationspan.data"
     compileSdk = 34
 
     defaultConfig {

@@ -16,12 +16,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.ext.android.getKoin
-import org.mothdigital.station_span.data.datasource.local.featch_time.FetchTimeDao
-import org.mothdigital.station_span.data.datasource.local.featch_time.FetchTimeEntity
-import org.mothdigital.station_span.data.datasource.local.station.StationDao
-import org.mothdigital.station_span.data.datasource.local.station.StationEntity
-import org.mothdigital.station_span.data.datasource.local.station_keyword.StationKeywordDao
-import org.mothdigital.station_span.data.datasource.local.station_keyword.StationKeywordEntity
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.featch_time.FetchTimeDao
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.featch_time.FetchTimeEntity
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.station.StationDao
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.station.StationEntity
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.station_keyword.StationKeywordDao
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.station_keyword.StationKeywordEntity
 import org.mothdigital.stationdistancechecker.utlis.mockStationEntity
 
 @RunWith(AndroidJUnit4::class)

@@ -1,6 +1,6 @@
 package org.mothdigital.stationdistancechecker.utlis
 
-import org.mothdigital.station_span.data.datasource.local.station.StationEntity
+import org.mothdigital.stationdistancechecker.stationspan.data.datasource.local.station.StationEntity
 
 val mockStationEntity = StationEntity(
     latitude = null,

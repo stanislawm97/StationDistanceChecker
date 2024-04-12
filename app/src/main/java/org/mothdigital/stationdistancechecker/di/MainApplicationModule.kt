@@ -5,9 +5,9 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import org.mothdigital.station_span.data.di.stationSpanDataModule
-import org.mothdigital.station_span.di.stationSpanModule
-import org.mothdigital.station_span.domain.di.stationSpanDomainModule
+import org.mothdigital.stationdistancechecker.stationspan.data.di.stationSpanDataModule
+import org.mothdigital.stationdistancechecker.stationspan.di.stationSpanModule
+import org.mothdigital.stationdistancechecker.stationspan.domain.di.stationSpanDomainModule
 import org.mothdigital.stationdistancechecker.BuildConfig
 import org.mothdigital.stationdistancechecker.api.HeaderInterceptor
 import org.mothdigital.stationdistancechecker.database.AppDatabase
