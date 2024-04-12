@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import org.mothdigital.station_span.StationSpanRoute
+import org.mothdigital.stationdistancechecker.stationspan.StationSpanRoute
 import org.mothdigital.stationdistancechecker.design.theme.StationDistanceCheckerTheme
 
 class MainActivity : ComponentActivity() {

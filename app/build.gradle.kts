@@ -5,13 +5,14 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.secretsGradlePlugin)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 secrets {
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "local.defaults.properties"
-    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
-    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+    ignoreList.add("sdk.*")
 }
 
 android {
@@ -25,11 +26,17 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                argument("room.schemaLocation", "$projectDir/schemas")
+            }
         }
 
         buildConfigField("String", "BASE_URL", "\"https://koleo.pl/api/v2/main/\"")
@@ -71,6 +78,10 @@ android {
     }
 }
 
+ksp {
+    arg("room.schemaLocation", "${projectDir.absolutePath}/schemas")
+}
+
 dependencies {
     implementation(project(":design"))
     implementation(project(":station-span"))
@@ -90,6 +101,9 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // Room
     implementation(libs.room.runtime)
